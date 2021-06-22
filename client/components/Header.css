@@ -8,11 +8,11 @@
   padding: 10px;
   color: white;
   font-size: 150%;
-  text-decoration: underline;
 }
 
 
-.header_label {
-  margin-left: 10px;
+.header_container> a {
+  color: white;
   margin-right: 10px;
+  text-decoration: none;
 }

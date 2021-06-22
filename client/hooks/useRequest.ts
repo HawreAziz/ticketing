@@ -2,10 +2,8 @@ import { useState } from 'react';
 import axios from 'axios';
 
 interface DataProps {
-  data: {
-    email: string;
-    id: string;
-  }
+  email: string;
+  id: string;
 }
 
 interface BodyProps {
@@ -19,17 +17,17 @@ interface ErrorsProps {
 
 interface ParamProps {
   uri: string;
-  body: BodyProps;
-  method: string;
-  onSuccess(): void;
+  body?: BodyProps;
+  method: 'post';
+  onSuccess?(): void;
 }
 
 export const useRequest = ({ uri, body, method, onSuccess }: ParamProps) => {
   const [errors, setErrors] = useState<ErrorsProps[]>([]);
-  const doRequest = async () => {
+  const doRequest = async (): Promise<DataProps> => {
     try {
       setErrors([]);
-      const { data }: DataProps = await axios[method](uri, body);
+      const { data }: { data: DataProps } = await axios[method](uri, body);
       if (onSuccess) {
         onSuccess();
       }

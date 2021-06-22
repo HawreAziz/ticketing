@@ -1,4 +1,4 @@
-import { DatabaseConnectionError } from './errors';
+import { DatabaseConnectionError } from '@hacommon/common';
 import mongoose from 'mongoose';
 import { app } from './app';
 

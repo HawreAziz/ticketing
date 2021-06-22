@@ -1,9 +1,9 @@
 import express, { Response, Request } from 'express';
 import { body } from 'express-validator';
-import { BadRequestError } from '../errors';
+import { BadRequestError } from '@hacommon/common';
 import { User } from '../models/user';
 import jwt from 'jsonwebtoken';
-import { validateRequest } from '../middlewares';
+import { validateRequest } from '@hacommon/common';
 
 const route = express.Router();
 

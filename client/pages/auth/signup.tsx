@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
-import { Header } from '../../components/Header';
+import { NextPage } from 'next';
 import Router from 'next/router';
+import { InputElement } from '../../components';
 import { useRequest } from '../../hooks/useRequest';
 
+interface ErrorProps {
+  message: string;
+}
 
-const SignUp: React.FC = () => {
-    const [ email, setEmail ] = useState("");
-    const [ password, setPassword ] = useState("");
-    const { errors, doRequest } = useRequest({
+const SignUp: NextPage = () => {
+  const [ email, setEmail ] = useState("");
+  const [ password, setPassword ] = useState("");
+  const { errors, doRequest } = useRequest({
       uri: '/api/users/signup',
       method: 'post', body: {
       email, password
     },
-    onSuccess: () => {Router.push('/')}
-    });
+    onSuccess: () => Router.push('/')
+  });
 
-    const onSubmit = async () => {
-      await doRequest();
+  const onSubmit = async () => {
+    await doRequest();
   }
 
   const formatErrors = () => {
@@ -28,7 +32,7 @@ const SignUp: React.FC = () => {
         <h2>Ooops...</h2>
         <ul>
           {
-            errors?.map((error: any) => (
+            errors?.map((error: ErrorProps) => (
               <li key={error.message}>{error.message}</li>
             ))
           }
@@ -39,29 +43,22 @@ const SignUp: React.FC = () => {
 
   return (
     <>
-    <Header />
     <div className="landing__form">
     <div className="inner_div">
       <h1>Sign Up</h1>
-      <div className="form-group landing">
-        <label>Email Address</label>
-        <input
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          className="form-control p-3 h-25"
-          placeholder="Enter email"
-        />
-      </div>
-      <div className="form-group landing">
-        <label>Password</label>
-        <input
-          type="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          className="form-control p-3 h-25"
-          placeholder="Password"
-        />
-      </div>
+      <InputElement
+        value={email}
+        setValue={setEmail}
+        fieldText="Email Address"
+        labelText="Enter Email"
+      />
+      <InputElement
+        value={password}
+        setValue={setPassword}
+        labelText="Password"
+        fieldText="Enter Password"
+        type="password"
+      />
       {formatErrors()}
       <button
         className="btn btn-primary"
@@ -74,6 +71,5 @@ const SignUp: React.FC = () => {
     </>
   )
 }
-
 
 export default SignUp;

@@ -1,10 +1,31 @@
 import React from 'react';
+import { NextPage } from 'next';
+import Link from 'next/link'
 
-const Header: React.FC = () => {
+interface UserProps {
+  currentUser: {
+    id: string;
+    email: string;
+  }
+}
+
+const Header: NextPage<UserProps> = ({ currentUser }) => {
+  const LINKS = [
+    !currentUser && { label: "Sign In", href: "/auth/signin"},
+    !currentUser && { label: "Sign Up", href: "/auth/signup"},
+    currentUser && { label: "Sign Out", href: "/auth/signout"}
+  ].filter(linkConfig => linkConfig)
+  .map(({ label, href}) => {
+    return (
+      <Link key={href} href={href}>
+        <a className="header_label">{label}</a>
+      </Link>
+    );
+  })
+
   return (
     <div className="header_container">
-      <label className="header_label">Sign up</label>
-      <label className="header_label">Sign in</label>
+    {LINKS}
     </div>
   );
 
