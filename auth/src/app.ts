@@ -2,8 +2,7 @@ import "express-async-errors";
 import { json } from 'body-parser';
 import express from 'express';
 import { signupUser, signinUser, currentUserRouter, signoutUser } from './routes';
-import { errorHandler } from '@hacommon/common';
-import { NotFoundError } from '@hacommon/common';
+import { errorHandler, NotFoundError } from '@hacommon/common';
 import cookieSession from 'cookie-session';
 import cors from 'cors';
 

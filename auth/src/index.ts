@@ -1,15 +1,19 @@
-import { DatabaseConnectionError } from '@hacommon/common';
+import { DatabaseConnectionError, EnvironmentError } from '@hacommon/common';
 import mongoose from 'mongoose';
 import { app } from './app';
 
-
+const PORT = 3002;
 
 const start = async () => {
   if (!process.env.JWT_KEY) {
     throw new Error('JWT_KEY is not set');
   }
+
+  if (!process.env.AUTH_MONGO_URI) {
+    throw new EnvironmentError('MONGO_URI is not set');
+  }
   try {
-    await mongoose.connect("mongodb://mongo-srv:27017/auth", {
+    await mongoose.connect(process.env.AUTH_MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true
@@ -18,8 +22,8 @@ const start = async () => {
   } catch (error) {
     throw new DatabaseConnectionError();
   }
-  app.listen(3000, () => {
-    console.log("Listening on port 3000!");
+  app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}!`);
   });
 }
 
